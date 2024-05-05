@@ -80,6 +80,25 @@ Here is the link for API Collection :- https://documenter.getpostman.com/view/15
 5. Approve loan applications (admin only) using the `/api/loan/approve/{loanId}` endpoint.
 6. Submit loan repayments with the `/api/repayment/add` endpoint.
 
+## Testing Users
+
+For testing purposes, the following users are available:
+
+- **Admin User:**
+  - Username: ADMIN@Aspire
+  - Password: ADMIN@123
+
+- **Customer User 1:**
+  - Username: CUSTOMER1@Aspire
+  - Password: CUSTOMER@1
+
+- **Customer User 2:**
+  - Username: CUSTOMER2@Aspire
+  - Password: CUSTOMER@2
+
+You can use these usernames and passwords to generate JWT tokens and authenticate requests.
+```
+
 ## Contributors
 
 - Anurag Dawar
