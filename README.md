@@ -71,7 +71,7 @@ This is a RESTful API for managing loan applications in the Aspire app. It allow
 
 ## Authentication
 
-The API uses JSON Web Tokens (JWT) for authentication. To obtain a token, send a POST request to `/api/auth/login` with valid credentials. Include the token in the `Authorization` header for authenticated requests.
+The API uses JSON Web Tokens (JWT) for authentication. To obtain a token, send a POST request to `/api/auth/login` with valid credentials. Include the token in the `Authorization` header for authenticated requests after appending "Bearer " as a prefix to it.
 
 ## Usage
 
