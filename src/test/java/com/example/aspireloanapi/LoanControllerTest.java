@@ -1,30 +1,27 @@
-package com.example.aspireloanapi.controller;
+package com.example.aspireloanapi;
 
+import com.example.aspireloanapi.controller.LoanController;
 import com.example.aspireloanapi.dto.LoanRequestDto;
 import com.example.aspireloanapi.dto.LoanResponseDto;
 import com.example.aspireloanapi.enums.LoanStatus;
-import com.example.aspireloanapi.model.Loan;
-import com.example.aspireloanapi.repository.LoanRepository;
 import com.example.aspireloanapi.service.LoanService;
 import com.example.aspireloanapi.utils.DateUtils;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class LoanControllerTest {
 
     @Mock
@@ -33,44 +30,28 @@ public class LoanControllerTest {
     @InjectMocks
     private LoanController loanController;
 
-    @Autowired
-    private LoanRepository loanRepository;
-
-
+    @Test
     public void testCreateLoan() {
         // Given
         LoanRequestDto loanRequestDto = new LoanRequestDto();
         loanRequestDto.setAmount(new BigDecimal("3000"));
         loanRequestDto.setLoanTermInWeeks(3);
 
-        // Mock loanRepository.save() to return a mock Loan instance with expected values
-        Loan expectedLoan = new Loan();
-        expectedLoan.setId(1L);
-        expectedLoan.setLoanId(UUID.randomUUID().toString());
-        expectedLoan.setAmount(new BigDecimal("3000"));
-        expectedLoan.setDisbursementDate(System.currentTimeMillis());
-        expectedLoan.setLoanTermInWeeks(3);
-        expectedLoan.setUserId("testUser123");
-        expectedLoan.setLoanStatus(LoanStatus.PENDING);
-
-        when(loanRepository.save(any(Loan.class))).thenReturn(expectedLoan);
-
-        // Set up the expected response (expectedResponse) with expected values
+        // Mock loanService.createLoan() to return a mock LoanResponseDto
         LoanResponseDto expectedResponse = new LoanResponseDto();
-        expectedResponse.setLoanId(expectedLoan.getLoanId());
-        expectedResponse.setAmount(expectedLoan.getAmount());
+        expectedResponse.setLoanId(UUID.randomUUID().toString());
+        expectedResponse.setAmount(new BigDecimal("3000"));
         expectedResponse.setDisbursementDate(DateUtils.convertTimestampToDate(System.currentTimeMillis()));
-        expectedResponse.setLoanTermInWeeks(expectedLoan.getLoanTermInWeeks());
-        expectedResponse.setLoanStatus(expectedLoan.getLoanStatus());
+        expectedResponse.setLoanTermInWeeks(3);
+        expectedResponse.setLoanStatus(LoanStatus.PENDING);
+
+        when(loanService.createLoan(loanRequestDto)).thenReturn(expectedResponse);
 
         // When
-        LoanResponseDto responseDto = loanService.createLoan(loanRequestDto);
+        LoanResponseDto responseDto = loanController.applyForLoan(loanRequestDto).getBody();
 
         // Then
-        // Assert that the returned LoanResponseDto (responseDto) is not null
         assertNotNull(responseDto);
-
-        // Add more assertions based on the expected behavior of createLoan()
         assertEquals(expectedResponse.getLoanId(), responseDto.getLoanId());
         assertEquals(expectedResponse.getAmount(), responseDto.getAmount());
         assertEquals(expectedResponse.getDisbursementDate(), responseDto.getDisbursementDate());
@@ -83,8 +64,7 @@ public class LoanControllerTest {
         // Given
         String loanId = "123";
         LoanResponseDto expectedResponse = new LoanResponseDto();
-        // Set up expectedResponse properties
-        expectedResponse.setLoanId("123"); // Set up at least one property to avoid null
+        expectedResponse.setLoanId("123");
 
         when(loanService.getLoanDetailsByLoanIdAndUserId(loanId)).thenReturn(expectedResponse);
 

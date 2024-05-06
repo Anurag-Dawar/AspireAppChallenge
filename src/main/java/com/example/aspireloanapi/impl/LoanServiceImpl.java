@@ -35,6 +35,10 @@ public class LoanServiceImpl implements LoanService {
 
         String userId = getUserIdFromContext();
 
+        if(loanRequestDto.getAmount() == null || loanRequestDto.getAmount().intValue() <= 0){
+            throw new RuntimeException("Invalid loan amount");
+        }
+
         //create and save loan in db
         Loan loan = Loan.Builder
                 .loan()
