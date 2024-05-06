@@ -39,6 +39,10 @@ public class LoanServiceImpl implements LoanService {
             throw new RuntimeException("Invalid loan amount");
         }
 
+        if(loanRequestDto.getLoanTermInWeeks() <= 0 ){
+            throw new RuntimeException("Invalid loan term");
+        }
+
         //create and save loan in db
         Loan loan = Loan.Builder
                 .loan()
