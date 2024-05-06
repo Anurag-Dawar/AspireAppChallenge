@@ -44,14 +44,19 @@ This is a RESTful API for managing loan applications in the Aspire app. It allow
    spring.datasource.password=
    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
+5. **Create database:**
 
-4. **Build the project:**
+   ```bash
+   mysql> CREATE DATABASE aspire;
+   ```
+
+5. **Build the project:**
 
    ```bash
    mvn clean install
    ```
 
-5. **Run the application:**
+6. **Run the application:**
 
    ```bash
    java -jar target/aspire-loan-api.jar
