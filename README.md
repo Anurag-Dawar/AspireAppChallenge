@@ -3,7 +3,8 @@
 
 ## Introduction
 
-This is a RESTful API for managing loan applications in the Aspire app. It allows authenticated users to apply for loans, view loan details, and manage repayments.
+This is a backend application for managing loan applications made using Java
+It allows authenticated users to apply for loans, view loan details, and manage repayments.
 
 ## Features
 
